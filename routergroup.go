@@ -9,6 +9,8 @@ import (
 	"path"
 	"regexp"
 	"strings"
+
+	"github.com/gin-gonic/gin/ginlog"
 )
 
 type IRouter interface {
@@ -32,6 +34,8 @@ type IRoutes interface {
 	StaticFile(string, string) IRoutes
 	Static(string, string) IRoutes
 	StaticFS(string, http.FileSystem) IRoutes
+	WithRuterLog(string) IRoutes //add new
+
 }
 
 // RouterGroup is used internally to configure router, a RouterGroup is associated with a prefix
@@ -41,6 +45,13 @@ type RouterGroup struct {
 	basePath string
 	engine   *Engine
 	root     bool
+}
+
+// Use adds middleware to the group, see example code in github.
+func (group *RouterGroup) WithGroupLog(glogName string) *RouterGroup {
+	ginlog.SetLogFileName(glogName).Init()
+	return group
+	//return group.returnObj()
 }
 
 var _ IRouter = &RouterGroup{}
@@ -97,6 +108,13 @@ func (group *RouterGroup) POST(relativePath string, handlers ...HandlerFunc) IRo
 // GET is a shortcut for router.Handle("GET", path, handle).
 func (group *RouterGroup) GET(relativePath string, handlers ...HandlerFunc) IRoutes {
 	return group.handle("GET", relativePath, handlers)
+}
+
+func (group *RouterGroup) WithRuterLog(glogName string) IRoutes {
+
+	ginlog.SetLogFileName(glogName).Init()
+
+	return group
 }
 
 // DELETE is a shortcut for router.Handle("DELETE", path, handle).
