@@ -8,7 +8,6 @@ import (
 	"bytes"
 	"fmt"
 	"reflect"
-
 	"github.com/rhettli/gin/json"
 )
 
