@@ -10,7 +10,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/gin-gonic/gin/ginlog"
+	"github.com/rhettli/gin/ginlog"
 )
 
 type IRouter interface {

@@ -9,7 +9,7 @@ import (
 	"html/template"
 	"net/http"
 
-	"github.com/gin-gonic/gin/json"
+	"github.com/rhettli/gin/json"
 )
 
 type JSON struct {
